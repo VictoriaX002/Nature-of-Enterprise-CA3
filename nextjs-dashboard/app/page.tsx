@@ -1,119 +1,31 @@
-"use client";
+import AcmeLogo from '@/app/ui/acme-logo';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
-import { useState } from "react";
-
-type Ticket = {
-  name: string;
-  type: string;
-  description: string;
-  priority: string;
-  status: string;
-};
-
-export default function Helpdesk() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const newTicket: Ticket = {
-      name: formData.get("name") as string,
-      type: formData.get("type") as string,
-      description: formData.get("description") as string,
-      priority: formData.get("priority") as string,
-      status: "Open",
-    };
-
-    setTickets([...tickets, newTicket]);
-    setSubmitted(true);
-
-    form.reset();
-  };
-
-
-const toggleStatus = (index: number) => {
-  const updated = [...tickets];
-  updated[index].status =
-    updated[index].status === "Open" ? "Resolved" : "Open";
-  setTickets(updated);
-};
-
-
+export default function Page() {
   return (
-    <div style={{ padding: "30px", fontFamily: "Arial" }}>
-      <h1 style={{ marginBottom: "20px" }}>Helpdesk</h1>
-
-      <form onSubmit={handleSubmit} style={{
-        background: "#f9f9f9",
-        padding: "20px",
-        borderRadius: "10px",
-        maxWidth: "400px"
-      }}>
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="name">Name:</label><br />
-          <input id="name" name="name" type="text" required style={{ width: "100%", padding: "8px" }} />
+    <main className="flex min-h-screen flex-col p-6">
+      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
+        {/* <AcmeLogo /> */}
+      </div>
+      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
+        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
+          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
+            <strong></strong>{' '}
+            <a href="https://nextjs.org/learn/" className="text-blue-500">
+            </a>
+          </p>
+          <Link
+            href="/login"
+            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+          >
+            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+          </Link>
         </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="type">Issue Type:</label><br />
-          <select id="type" name="type" required style={{ width: "100%", padding: "8px" }}>
-            <option value="">Select</option>
-            <option>IT Issue</option>
-            <option>Facilities</option>
-            <option>General</option>
-          </select>
+        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+          {/* Add Hero Images Here */}
         </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="description">Description:</label><br />
-          <textarea id="description" name="description" required style={{ width: "100%", padding: "8px" }} />
-        </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="priority">Priority:</label><br />
-          <select id="priority" name="priority" required style={{ width: "100%", padding: "8px" }}>
-            <option value="">Select</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-          </select>
-        </div>
-
-        <button style={{
-          marginTop: "10px",
-          padding: "10px",
-          background: "blue",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}>
-          Submit Ticket
-        </button>
-      </form>
-
-      {submitted && <p style={{ color: "green" }}>Ticket submitted ✅</p>}
-
-      <h2 style={{ marginTop: "30px" }}>Submitted Tickets</h2>
-
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {tickets.map((ticket, index) => (
-          <li key={index} style={{
-            background: "#eee",
-            padding: "10px",
-            marginBottom: "10px",
-            borderRadius: "8px"
-          }}>
-            <strong>{ticket.name}</strong> - {ticket.type} ({ticket.priority})
-            <br />
-            {ticket.description}
-          </li>
-        ))}
-      </ul>
-    </div>
+      </div>
+    </main>
   );
 }
