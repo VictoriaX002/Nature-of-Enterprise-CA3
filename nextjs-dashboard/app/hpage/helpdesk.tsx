@@ -34,32 +34,35 @@ export default function Helpdesk() {
     form.reset();
   };
 
-
-const toggleStatus = (index: number) => {
-  const updated = [...tickets];
-  updated[index].status =
-    updated[index].status === "Open" ? "Resolved" : "Open";
-  setTickets(updated);
-};
-
+  const toggleStatus = (index: number) => {
+    const updated = [...tickets];
+    updated[index].status =
+      updated[index].status === "Open" ? "Resolved" : "Open";
+    setTickets(updated);
+  };
 
   return (
     <div style={{ padding: "30px", fontFamily: "Arial" }}>
       <h1 style={{ marginBottom: "20px" }}>Helpdesk</h1>
 
-      <form onSubmit={handleSubmit} style={{
-        background: "#f9f9f9",
-        padding: "20px",
-        borderRadius: "10px",
-        maxWidth: "400px"
-      }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "#f9f9f9",
+          padding: "20px",
+          borderRadius: "10px",
+          maxWidth: "400px",
+        }}
+      >
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="name">Name:</label><br />
+          <label htmlFor="name">Name:</label>
+          <br />
           <input id="name" name="name" type="text" required style={{ width: "100%", padding: "8px" }} />
         </div>
 
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="type">Issue Type:</label><br />
+          <label htmlFor="type">Issue Type:</label>
+          <br />
           <select id="type" name="type" required style={{ width: "100%", padding: "8px" }}>
             <option value="">Select</option>
             <option>IT Issue</option>
@@ -69,12 +72,14 @@ const toggleStatus = (index: number) => {
         </div>
 
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="description">Description:</label><br />
+          <label htmlFor="description">Description:</label>
+          <br />
           <textarea id="description" name="description" required style={{ width: "100%", padding: "8px" }} />
         </div>
 
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="priority">Priority:</label><br />
+          <label htmlFor="priority">Priority:</label>
+          <br />
           <select id="priority" name="priority" required style={{ width: "100%", padding: "8px" }}>
             <option value="">Select</option>
             <option>Low</option>
@@ -83,15 +88,17 @@ const toggleStatus = (index: number) => {
           </select>
         </div>
 
-        <button style={{
-          marginTop: "10px",
-          padding: "10px",
-          background: "blue",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}>
+        <button
+          style={{
+            marginTop: "10px",
+            padding: "10px",
+            background: "blue",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
           Submit Ticket
         </button>
       </form>
@@ -102,12 +109,15 @@ const toggleStatus = (index: number) => {
 
       <ul style={{ listStyle: "none", padding: 0 }}>
         {tickets.map((ticket, index) => (
-          <li key={index} style={{
-            background: "#eee",
-            padding: "10px",
-            marginBottom: "10px",
-            borderRadius: "8px"
-          }}>
+          <li
+            key={index}
+            style={{
+              background: "#eee",
+              padding: "10px",
+              marginBottom: "10px",
+              borderRadius: "8px",
+            }}
+          >
             <strong>{ticket.name}</strong> - {ticket.type} ({ticket.priority})
             <br />
             {ticket.description}
