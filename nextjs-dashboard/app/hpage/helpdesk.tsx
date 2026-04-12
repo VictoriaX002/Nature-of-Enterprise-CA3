@@ -30,7 +30,6 @@ export default function Helpdesk() {
 
     setTickets([...tickets, newTicket]);
     setSubmitted(true);
-
     form.reset();
   };
 
@@ -42,88 +41,98 @@ export default function Helpdesk() {
   };
 
   return (
-    <div style={{ padding: "30px", fontFamily: "Arial" }}>
-      <h1 style={{ marginBottom: "20px" }}>Helpdesk</h1>
+    <div className="min-h-screen bg-blue-900 text-gray-900 flex flex-col items-center py-10 px-4">
+      <div className="w-full max-w-5xl">
+        <h1 className="text-4xl font-bold text-white mb-6 border-b border-blue-300 pb-2">
+          University Helpdesk
+        </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          background: "#f9f9f9",
-          padding: "20px",
-          borderRadius: "10px",
-          maxWidth: "400px",
-        }}
-      >
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="name">Name:</label>
-          <br />
-          <input id="name" name="name" type="text" required style={{ width: "100%", padding: "8px" }} />
+        <div className="bg-white shadow-lg rounded-2xl p-6 max-w-md">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block font-semibold mb-1">Name</label>
+              <input name="name" required className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-1">Issue Type</label>
+              <select name="type" required className="w-full border rounded-lg p-2">
+                <option value="">Select</option>
+                <option>IT Issue</option>
+                <option>Facilities</option>
+                <option>General</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-1">Description</label>
+              <textarea name="description" required className="w-full border rounded-lg p-2" />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-1">Priority</label>
+              <select name="priority" required className="w-full border rounded-lg p-2">
+                <option value="">Select</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+
+            <button className="w-full bg-blue-800 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
+              Submit Ticket
+            </button>
+          </form>
+
+          {submitted && (
+            <p className="text-green-600 mt-4">Ticket submitted.</p>
+          )}
         </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="type">Issue Type:</label>
-          <br />
-          <select id="type" name="type" required style={{ width: "100%", padding: "8px" }}>
-            <option value="">Select</option>
-            <option>IT Issue</option>
-            <option>Facilities</option>
-            <option>General</option>
-          </select>
+        <div className="mt-10">
+          <h2 className="text-2xl text-white font-semibold mb-4">
+            Submitted Tickets
+          </h2>
+
+          <div className="space-y-4">
+            {tickets.map((ticket, index) => (
+              <div
+                key={index}
+                className="bg-white p-4 rounded-xl shadow-md flex justify-between items-start"
+              >
+                <div>
+                  <p className="font-bold text-lg">
+                    {ticket.name} — {ticket.type}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Priority: {ticket.priority}
+                  </p>
+                  <p className="mt-2">{ticket.description}</p>
+                  <p className="mt-2 text-sm">
+                    Status: 
+                    <span
+                      className={`ml-1 font-semibold ${
+                        ticket.status === "Open"
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }`}
+                    >
+                      {ticket.status}
+                    </span>
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => toggleStatus(index)}
+                  className="ml-4 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-lg text-sm"
+                >
+                  Toggle
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="description">Description:</label>
-          <br />
-          <textarea id="description" name="description" required style={{ width: "100%", padding: "8px" }} />
-        </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="priority">Priority:</label>
-          <br />
-          <select id="priority" name="priority" required style={{ width: "100%", padding: "8px" }}>
-            <option value="">Select</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-          </select>
-        </div>
-
-        <button
-          style={{
-            marginTop: "10px",
-            padding: "10px",
-            background: "blue",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Submit Ticket
-        </button>
-      </form>
-
-      {submitted && <p style={{ color: "green" }}>Ticket submitted ✅</p>}
-
-      <h2 style={{ marginTop: "30px" }}>Submitted Tickets</h2>
-
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {tickets.map((ticket, index) => (
-          <li
-            key={index}
-            style={{
-              background: "#eee",
-              padding: "10px",
-              marginBottom: "10px",
-              borderRadius: "8px",
-            }}
-          >
-            <strong>{ticket.name}</strong> - {ticket.type} ({ticket.priority})
-            <br />
-            {ticket.description}
-          </li>
-        ))}
-      </ul>
+      </div>
     </div>
   );
 }
