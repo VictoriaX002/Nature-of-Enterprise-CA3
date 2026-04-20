@@ -38,5 +38,5 @@ I was responsible for developing the Helpdesk feature. This includes:
 5. Open the link in browser: localhost
 
 ## NOTES: 
-Data used is not real
-Project for Nature of Enterprise~
+- Data used is not real
+- Project for Nature of Enterprise~
