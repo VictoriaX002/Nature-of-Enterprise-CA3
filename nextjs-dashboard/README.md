@@ -38,5 +38,8 @@ I was responsible for developing the Helpdesk feature. This includes:
 5. Open the link in browser: localhost
 
 ## NOTES: 
-- Data used is not real
+- Data used is not real, AI created.
+- ML uses past data (from database) to learn.
+- Link on main page to database/data table.
+- Idea to project the database as a regression line, graph, etc. on main page.
 - Project for Nature of Enterprise~
