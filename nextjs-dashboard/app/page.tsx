@@ -33,6 +33,12 @@ export default function Page() {
           >
             <span>Helpdesk</span>
           </Link>
+          <Link
+          href="/events"
+          className="flex items-center gap-5 self-start rounded-lg border border-blue-500 px-6 py-3 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 md:text-base"
+          >
+            <span>Society Events</span>
+            </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           {/* Add Hero Images Here */}
