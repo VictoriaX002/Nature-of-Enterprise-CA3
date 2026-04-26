@@ -43,3 +43,23 @@ I was responsible for developing the Helpdesk feature. This includes:
 - Link on main page to database/data table.
 - Idea to project the database as a regression line, graph, etc. on main page.
 - Project for Nature of Enterprise~
+
+
+## My Contribution (yageen)
+
+I was responsible for developing the Society Events feature. This includes:
+
+- Creating the events page with a grid layout showing all campus society events
+- Adding fictional seed data with 8 events across 7 categories
+- Building filters to sort events by status (Upcoming/Done) and category
+- Adding the ability to create, delete, and toggle event status
+- Implementing a ML-based Similar Events recommender using content-based filtering
+- Ensuring accessibility with proper labels, aria attributes, and keyboard navigation
+
+## How to run the project
+
+1. Clone the repo: `git clone <repo-link>`
+2. Navigate into project: `cd nextjs-dashboard`
+3. Install dependencies: `pnpm install`
+4. Run development server: `pnpm dev`
+5. Open in browser: `http://localhost:3000`
