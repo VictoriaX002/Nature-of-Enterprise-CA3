@@ -1,0 +1,6 @@
+[build]
+  base = "nextjs-dashboard"
+  command = "pnpm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
