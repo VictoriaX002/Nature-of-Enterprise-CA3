@@ -11,9 +11,9 @@ This project is a web-based "Campus Companion" app designed to support students 
 
 ## Features
 - Helpdesk ticket system (submit and manage issues)
-- Event and timetable pages (in progress)
+- timetable pages (in progress)
 - Canteen Menu
-- Society Events
+- Society Events (done)
 - Accessibile design
 
 ## My Contribution (Peace)
@@ -49,7 +49,7 @@ I was responsible for developing the Helpdesk feature. This includes:
 
 I was responsible for developing the Society Events feature. This includes:
 
-- Creating the events page with a grid layout showing all campus society events
+- Creating the events page with a grid layout showing all campuses society events
 - Adding fictional seed data with 8 events across 7 categories
 - Building filters to sort events by status (Upcoming/Done) and category
 - Adding the ability to create, delete, and toggle event status
