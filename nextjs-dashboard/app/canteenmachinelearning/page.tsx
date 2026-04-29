@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import { fallbackCanteenMenu } from '@/app/lib/canteen-data';
+import {
+  HighContrastToggleButton,
+  LargeTextMain,
+  LargeTextProvider,
+  LargeTextToggleButton,
+} from '@/app/ui/large-text-mode';
 
 type PurchaseFrequencyRow = {
   id: string;
@@ -15,6 +21,7 @@ type RegressionRow = {
   itemName: string;
   slope: number;
   forecastWeek7: number;
+  testMae: number;
   recommendedOrderQty: number;
 };
 
@@ -35,9 +42,9 @@ function buildPurchaseFrequencyDataset(): PurchaseFrequencyRow[] {
   }));
 }
 
-function runBasicRegression(weeklyPurchases: number[]) {
+function fitLinearRegression(weeklyPurchases: number[], startWeek = 1) {
   const n = weeklyPurchases.length;
-  const xValues = Array.from({ length: n }, (_, index) => index + 1);
+  const xValues = Array.from({ length: n }, (_, index) => startWeek + index);
   const yValues = weeklyPurchases;
 
   const xMean = xValues.reduce((sum, value) => sum + value, 0) / n;
@@ -48,6 +55,41 @@ function runBasicRegression(weeklyPurchases: number[]) {
 
   const slope = denominator === 0 ? 0 : numerator / denominator;
   const intercept = yMean - slope * xMean;
+
+  return { slope, intercept };
+}
+
+function predictWithModel(slope: number, intercept: number, weekNumber: number): number {
+  return Math.max(0, Math.min(20, slope * weekNumber + intercept));
+}
+
+function trainTestSplitTimeSeries(weeklyPurchases: number[], trainRatio = 0.67) {
+  const n = weeklyPurchases.length;
+  const splitIndex = Math.max(2, Math.min(n - 1, Math.floor(n * trainRatio)));
+  return {
+    train: weeklyPurchases.slice(0, splitIndex),
+    test: weeklyPurchases.slice(splitIndex),
+  };
+}
+
+/** Mean absolute error on the test split (matches basic_regression.py evaluate_train_test_split). */
+function evaluateTrainTestSplit(weeklyPurchases: number[]): number {
+  const { train, test } = trainTestSplitTimeSeries(weeklyPurchases);
+  const trainWeeks = train.length;
+  const { slope, intercept } = fitLinearRegression(train, 1);
+  const predictions = test.map((_, index) =>
+    predictWithModel(slope, intercept, trainWeeks + index + 1)
+  );
+  if (predictions.length === 0) {
+    return 0;
+  }
+  const absoluteErrors = test.map((actual, index) => Math.abs(actual - predictions[index]!));
+  return absoluteErrors.reduce((sum, value) => sum + value, 0) / absoluteErrors.length;
+}
+
+function runBasicRegression(weeklyPurchases: number[]) {
+  const n = weeklyPurchases.length;
+  const { slope, intercept } = fitLinearRegression(weeklyPurchases, 1);
   const week7Forecast = slope * (n + 1) + intercept;
 
   return { slope, week7Forecast };
@@ -58,12 +100,14 @@ function buildRegressionDataset(data: PurchaseFrequencyRow[]): RegressionRow[] {
     const regression = runBasicRegression(row.weeklyPurchases);
     const boundedForecast = Math.max(0, Math.min(20, regression.week7Forecast));
     const recommendedOrderQty = Math.max(1, Math.round(boundedForecast));
+    const testMae = evaluateTrainTestSplit(row.weeklyPurchases);
 
     return {
       id: row.id,
       itemName: row.itemName,
       slope: regression.slope,
       forecastWeek7: boundedForecast,
+      testMae,
       recommendedOrderQty,
     };
   });
@@ -94,7 +138,8 @@ export default function CanteenMachineLearningPage() {
   const polylinePoints = chartPoints.map((point) => `${point.x},${point.y}`).join(' ');
 
   return (
-    <main className="min-h-screen bg-blue-900 px-4 py-6 md:px-8 md:py-10">
+    <LargeTextProvider>
+      <LargeTextMain className="min-h-screen bg-blue-900 px-4 py-6 md:px-8 md:py-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <header className="rounded-2xl bg-white p-5 shadow-lg">
           <h1 className="text-2xl font-semibold text-slate-900 md:text-3xl">Canteen Machine Learning Data</h1>
@@ -102,7 +147,9 @@ export default function CanteenMachineLearningPage() {
             Fictional training-style dataset showing how many times each menu item was bought over the
             last 6 weeks (range: 0 to 20 per week).
           </p>
-          <div className="mt-4">
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <LargeTextToggleButton />
+            <HighContrastToggleButton />
             <Link
               href="/"
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 transition-colors hover:bg-slate-100"
@@ -162,8 +209,10 @@ export default function CanteenMachineLearningPage() {
       <section className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
         <h2 className="text-xl font-semibold text-slate-900">Basic Regression Forecast</h2>
         <p className="mt-2 text-sm text-slate-700">
-          Forecasted week 7 demand based on weeks 1-6. Recommended order quantity always has a minimum of
-          1 item.
+          Forecasted week 7 demand based on weeks 1-6. Test MAE is mean absolute error on the held-out
+          weeks after fitting on the first ~67% of the series (same logic as{' '}
+          <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">basic_regression.py</code>).
+          Recommended order quantity always has a minimum of 1 item.
         </p>
         <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200 bg-white">
           <table className="min-w-full text-left text-sm">
@@ -182,6 +231,9 @@ export default function CanteenMachineLearningPage() {
                   Forecast (Week 7)
                 </th>
                 <th scope="col" className="px-3 py-2 font-semibold text-slate-900">
+                  Test MAE
+                </th>
+                <th scope="col" className="px-3 py-2 font-semibold text-slate-900">
                   Recommended Order Quantity
                 </th>
               </tr>
@@ -192,6 +244,7 @@ export default function CanteenMachineLearningPage() {
                   <td className="px-3 py-3 font-medium text-slate-900">{row.itemName}</td>
                   <td className="px-3 py-3 text-slate-700">{row.slope.toFixed(2)}</td>
                   <td className="px-3 py-3 text-slate-700">{row.forecastWeek7.toFixed(2)}</td>
+                  <td className="px-3 py-3 text-slate-700">{row.testMae.toFixed(3)}</td>
                   <td className="px-3 py-3 text-slate-700">{row.recommendedOrderQty}</td>
                 </tr>
               ))}
@@ -269,6 +322,7 @@ export default function CanteenMachineLearningPage() {
         </figure>
       </section>
       </div>
-    </main>
+      </LargeTextMain>
+    </LargeTextProvider>
   );
 }
