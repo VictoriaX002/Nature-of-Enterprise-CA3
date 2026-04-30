@@ -151,6 +151,12 @@ export default function CanteenMachineLearningPage() {
             <LargeTextToggleButton />
             <HighContrastToggleButton />
             <Link
+              href="/canteen"
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 transition-colors hover:bg-slate-100"
+            >
+              Canteen
+            </Link>
+            <Link
               href="/"
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 transition-colors hover:bg-slate-100"
             >
