@@ -1,0 +1,37 @@
+[
+  {
+    "id": "m-breakfast-oats",
+    "itemName": "Berry Overnight Oats",
+    "weeklyPurchases": [6, 4, 9, 8, 11, 10]
+  },
+  {
+    "id": "m-lunch-wrap",
+    "itemName": "Roasted Veggie Wrap",
+    "weeklyPurchases": [12, 14, 13, 15, 16, 18]
+  },
+  {
+    "id": "m-dinner-curry",
+    "itemName": "Chickpea Coconut Curry",
+    "weeklyPurchases": [7, 6, 8, 9, 10, 12]
+  },
+  {
+    "id": "t-lunch-bowl",
+    "itemName": "Falafel Grain Bowl",
+    "weeklyPurchases": [10, 9, 11, 13, 12, 14]
+  },
+  {
+    "id": "w-dinner-pasta",
+    "itemName": "Tomato Basil Pasta",
+    "weeklyPurchases": [5, 3, 4, 6, 5, 7]
+  },
+  {
+    "id": "th-breakfast-omelette",
+    "itemName": "Spinach Omelette",
+    "weeklyPurchases": [2, 1, 0, 3, 2, 1]
+  },
+  {
+    "id": "f-lunch-chicken",
+    "itemName": "Lemon Herb Chicken",
+    "weeklyPurchases": [15, 16, 14, 17, 19, 20]
+  }
+]

@@ -11,55 +11,48 @@ This project is a web-based "Campus Companion" app designed to support students 
 
 ## Features
 - Helpdesk ticket system (submit and manage issues)
-- Event and timetable pages (in progress)
+- Timetable pages 
 - Canteen Menu
 - Society Events
 - Accessibile design
 
-## My Contribution (Peace)
-I was responsible for developing the Helpdesk feature. This includes:
-- Creating a form for users to submit tickets
-- Storing and displaying submitted tickets
-- Adding priority levels to submitted tickets
-- Implementing a status system (Open/Resolved toggle)
-- Styling the UI with Tailwind CSS
-- Updating md
-
-## Technologies Used
-- Next.js (React)
-- TypeScript
-- Tailwinf CSS
-
-## How to run the project: 
-1. CLone repo: git clone <repo-link>
-2. Navigate into project: cd nextjs-dashboard
-3. Install dependencies: pnpm install
-4. Run development server: pnpm dev
-5. Open the link in browser: localhost
-
-## NOTES: 
-- Data used is not real, AI created.
-- ML uses past data (from database) to learn.
-- Link on main page to database/data table.
-- Idea to project the database as a regression line, graph, etc. on main page.
-- Project for Nature of Enterprise~
-
-
-## My Contribution (yageen)
-
+## My Contribution (Yageen)
 I was responsible for developing the Society Events feature. This includes:
-
-- Creating the events page with a grid layout showing all campus society events
+- Creating the events page with a grid layout showing all campuses society events
 - Adding fictional seed data with 8 events across 7 categories
 - Building filters to sort events by status (Upcoming/Done) and category
 - Adding the ability to create, delete, and toggle event status
 - Implementing a ML-based Similar Events recommender using content-based filtering
 - Ensuring accessibility with proper labels, aria attributes, and keyboard navigation
 
-## How to run the project
+## My Contribution (Peace)
+I was responsible for designing and developing the Helpdesk feature of the application. This includes:
+- Creating a user input form to submit helpdesk tickets
+- Implementing state management to store and display submitted tickets dynamically
+- Designing and styling the UI using Tailwind CSS for a clean and user-friendly layout
+- Adding a ticket status system, allowing users to toggle between Open and Resolved
+- Developing a priority prediction system using a custom classification model
+- Improving the model by using historical (fake) dataset inputs instead of simple keyword matching
+- Implementing scores approach to simulate machine learning behaviour
+- Creating and integrating a regression graph using Python (pandas and matplotlib) to visualise relationships in the dataset
+- Linking the data analysis page within the application to display the generated graph
+- Contributing to project documentation including README and prompt log docx creation
 
+## Technologies Used
+- Next.js (React)
+- TypeScript
+- Tailwind CSS
+
+## How to run the project
 1. Clone the repo: `git clone <repo-link>`
 2. Navigate into project: `cd nextjs-dashboard`
 3. Install dependencies: `pnpm install`
 4. Run development server: `pnpm dev`
 5. Open in browser: `http://localhost:3000`
+
+## IN-CLASS NOTES & SUGGESTIONS: 
+- Data used is not real, AI created.
+- ML uses past data (from database) to learn
+- Link on main page to database/data table.
+- Idea to project the database as a regression line, graph, etc. on main page.
+- Project for Nature of Enterprise~

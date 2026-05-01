@@ -1,5 +1,46 @@
 "use client";
 
+
+const trainingData = [
+  { type: "IT Issue", description: "wifi not working in lab", priority: "High" },
+  { type: "IT Issue", description: "cannot login to system", priority: "High" },
+  { type: "Facilities", description: "door not working", priority: "Medium" },
+  { type: "Facilities", description: "chair broken in classroom", priority: "Medium" },
+  { type: "General", description: "question about timetable", priority: "Low" },
+  { type: "General", description: "need information about event", priority: "Low" },
+];
+
+
+
+function predictPriority(description: string, type: string): string {
+  const text = description.toLowerCase();
+
+  let scores = {
+    High: 0,
+    Medium: 0,
+    Low: 0,
+  };
+
+  trainingData.forEach((item) => {
+    // match type
+    if (item.type === type) {
+      scores[item.priority as keyof typeof scores] += 2;
+    }
+
+    // match words
+    const words = item.description.split(" ");
+    words.forEach((word) => {
+      if (text.includes(word)) {
+        scores[item.priority as keyof typeof scores] += 1;
+      }
+    });
+  });
+
+  // pick highest score
+  return Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+}
+
+
 import { useState } from "react";
 
 type Ticket = {
@@ -20,11 +61,13 @@ export default function Helpdesk() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    const description = formData.get("description") as string;
+
     const newTicket: Ticket = {
       name: formData.get("name") as string,
       type: formData.get("type") as string,
-      description: formData.get("description") as string,
-      priority: formData.get("priority") as string,
+      description,
+      priority: predictPriority(description, formData.get("type") as string),
       status: "Open",
     };
 
@@ -44,19 +87,27 @@ export default function Helpdesk() {
     <div className="min-h-screen bg-blue-900 text-gray-900 flex flex-col items-center py-10 px-4">
       <div className="w-full max-w-5xl">
         <h1 className="text-4xl font-bold text-white mb-6 border-b border-blue-300 pb-2">
-          University Helpdesk
+          UNIVERSITY HELPDESK
         </h1>
 
         <div className="bg-white shadow-lg rounded-2xl p-6 max-w-md">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block font-semibold mb-1">Name</label>
-              <input name="name" required className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input
+                name="name"
+                required
+                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div>
               <label className="block font-semibold mb-1">Issue Type</label>
-              <select name="type" required className="w-full border rounded-lg p-2">
+              <select
+                name="type"
+                required
+                className="w-full border rounded-lg p-2"
+              >
                 <option value="">Select</option>
                 <option>IT Issue</option>
                 <option>Facilities</option>
@@ -66,17 +117,11 @@ export default function Helpdesk() {
 
             <div>
               <label className="block font-semibold mb-1">Description</label>
-              <textarea name="description" required className="w-full border rounded-lg p-2" />
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">Priority</label>
-              <select name="priority" required className="w-full border rounded-lg p-2">
-                <option value="">Select</option>
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-              </select>
+              <textarea
+                name="description"
+                required
+                className="w-full border rounded-lg p-2"
+              />
             </div>
 
             <button className="w-full bg-blue-800 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
@@ -105,11 +150,11 @@ export default function Helpdesk() {
                     {ticket.name} — {ticket.type}
                   </p>
                   <p className="text-sm text-gray-600">
-                    Priority: {ticket.priority}
+                    Predicted Priority: {ticket.priority}
                   </p>
                   <p className="mt-2">{ticket.description}</p>
                   <p className="mt-2 text-sm">
-                    Status: 
+                    Status:
                     <span
                       className={`ml-1 font-semibold ${
                         ticket.status === "Open"

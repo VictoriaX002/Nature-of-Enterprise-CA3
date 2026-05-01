@@ -16,3 +16,113 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Scoped high contrast (toggle on canteen / ML pages via data-high-contrast on <main>) */
+[data-high-contrast='true'] {
+  background-color: #000000 !important;
+  color: #ffffff;
+}
+
+[data-high-contrast='true'] .bg-white,
+[data-high-contrast='true'] .bg-slate-50,
+[data-high-contrast='true'] .bg-blue-50 {
+  background-color: #000000 !important;
+}
+
+[data-high-contrast='true'] .bg-blue-900 {
+  background-color: #000000 !important;
+}
+
+[data-high-contrast='true'] .text-slate-900,
+[data-high-contrast='true'] .text-slate-800,
+[data-high-contrast='true'] .text-slate-700,
+[data-high-contrast='true'] .text-slate-600 {
+  color: #ffffff !important;
+}
+
+[data-high-contrast='true'] .text-blue-900,
+[data-high-contrast='true'] .text-blue-600 {
+  color: #ffff00 !important;
+}
+
+[data-high-contrast='true'] .border-slate-200,
+[data-high-contrast='true'] .border-slate-300 {
+  border-color: #ffffff !important;
+}
+
+[data-high-contrast='true'] tr.border-t,
+[data-high-contrast='true'] .border-t.border-slate-200 {
+  border-color: #ffffff !important;
+}
+
+[data-high-contrast='true'] tr.hover\:bg-slate-50:hover {
+  background-color: #1a1a1a !important;
+}
+
+[data-high-contrast='true'] .bg-red-50 {
+  background-color: #330000 !important;
+}
+
+[data-high-contrast='true'] .border-red-300,
+[data-high-contrast='true'] .text-red-700 {
+  border-color: #ff6666 !important;
+  color: #ff9999 !important;
+}
+
+[data-high-contrast='true'] a.rounded-lg.border {
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+[data-high-contrast='true'] a.rounded-lg.border:hover {
+  background-color: #1a1a1a !important;
+}
+
+[data-high-contrast='true'] code {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+[data-high-contrast='true'] select,
+[data-high-contrast='true'] select option {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+[data-high-contrast='true'] input[type='radio'] {
+  accent-color: #ffff00;
+}
+
+[data-high-contrast='true'] a.bg-blue-700 {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+[data-high-contrast='true'] .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.15);
+}
+
+/* Chart SVG (fixed palette) */
+[data-high-contrast='true'] svg [stroke='#2563eb'],
+[data-high-contrast='true'] svg [stroke='#334155'],
+[data-high-contrast='true'] svg [stroke='#e2e8f0'] {
+  stroke: #ffffff !important;
+}
+
+[data-high-contrast='true'] svg [fill='#1d4ed8'] {
+  fill: #ffff00 !important;
+}
+
+[data-high-contrast='true'] svg [fill='#1e293b'],
+[data-high-contrast='true'] svg [fill='#334155'],
+[data-high-contrast='true'] svg [fill='#475569'],
+[data-high-contrast='true'] svg [fill='#0f172a'] {
+  fill: #ffffff !important;
+}
+
+[data-high-contrast='true'] figure.rounded-lg.border.border-slate-200.bg-slate-50 {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+}

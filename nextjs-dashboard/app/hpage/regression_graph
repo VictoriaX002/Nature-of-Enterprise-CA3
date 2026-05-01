@@ -1,0 +1,25 @@
+# I installed packages before anything
+
+# Import 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Data
+data = [
+(1,3),(1,3),(1,2),(1,1),(1,3),(1,2),(1,1),(1,2),(1,3),(1,1),
+(2,2),(2,3),(2,1),(2,2),(2,3),(2,1),(2,2),(2,3),(2,1),(2,2),
+(3,1),(3,2),(3,1),(3,1),(3,2),(3,1),(3,3),(3,2),(3,1),(3,2)
+]
+
+df = pd.DataFrame(data, columns=["Type_num", "Priority_num"])
+
+# Plot
+plt.figure(figsize=(8,5))
+sns.regplot(x="Type_num", y="Priority_num", data=df, scatter_kws={"s":50})
+
+plt.title("Regression: Type vs Priority")
+plt.xlabel("Type (1=IT, 2=Facilities, 3=General)")
+plt.ylabel("Priority (1=Low, 2=Medium, 3=High)")
+
+plt.show()
